@@ -41,7 +41,6 @@ func read(serv_conn *net.UDPConn) {
 		current_packet = test
 
 	//	fmt.Println(binary_packet, current_packet)
-		fmt.Println("Received", current_packet, ", checking packet now.")
 		go check_packet(serv_conn, current_packet, last_recd)
 
 		fmt.Println("Successfully received", string(buffer[0:n]), "from", addr)
@@ -51,4 +50,5 @@ func read(serv_conn *net.UDPConn) {
 		}
 	}
 }
+
 
