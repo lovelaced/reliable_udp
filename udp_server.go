@@ -28,6 +28,7 @@ func main() {
 
 	var last_recd int = -1
 	for {
+		fmt.Println("Reading from UDP buffer...")
 		n,addr,err := serv_conn.ReadFromUDP(buffer)
 
 	//	binary_packet := bytes.NewBuffer(buffer[0:n])
@@ -38,10 +39,8 @@ func main() {
 
 	//	fmt.Println(binary_packet, current_packet)
 		fmt.Println("Received", current_packet, ", checking packet now.")
-		chk := check_packet(current_packet, last_recd)
-		if chk == -1 {
-			continue
-		}
+		go check_packet(current_packet, last_recd)
+
 		fmt.Println("Successfully received", string(buffer[0:n]), "from", addr)
 		last_recd, err = strconv.Atoi(string(buffer[0:n]))
 		if err != nil {

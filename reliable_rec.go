@@ -7,14 +7,14 @@ import (
 	"strconv"
 )
 
-func check_packet(curr_packet int, last_recd int) int {
+func check_packet(curr_packet int, last_recd int) {
 	fmt.Println("curr_packet:", curr_packet, " last received:", last_recd)
 	if curr_packet == last_recd+1 {
 		ack(curr_packet)
 	} else {
-		return -1
+		return
 	}
-	return 0
+	return
 }
 
 func ack(curr_packet int) {
