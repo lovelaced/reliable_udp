@@ -7,14 +7,11 @@ import (
 	"strconv"
 )
 
-func check_packet(curr_packet int, last_recd int) {
+func check_packet(serv_conn *net.UDPConn, curr_packet int, last_recd int) {
 	fmt.Println("curr_packet:", curr_packet, " last received:", last_recd)
 	if curr_packet == last_recd+1 {
 		ack(curr_packet)
-	} else {
-		return
-	}
-	return
+	} else { read(serv_conn) }
 }
 
 func ack(curr_packet int) {
