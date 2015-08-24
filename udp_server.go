@@ -16,7 +16,7 @@ func CheckError(err error) {
 }
 
 func main() {
-	serv_addr,err := net.ResolveUDPAddr("udp",":10001")
+	serv_addr, err := net.ResolveUDPAddr("udp",":10001")
 	CheckError(err)
 
 	serv_conn,err := net.ListenUDP("udp", serv_addr)
@@ -26,7 +26,7 @@ func main() {
 
 	buffer := make([]byte, 1024)
 
-	var last_recd int = -1
+	var last_recd int = 0
 	for {
 		fmt.Println("Reading from UDP buffer...")
 		n,addr,err := serv_conn.ReadFromUDP(buffer)
