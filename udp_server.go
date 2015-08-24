@@ -16,17 +16,20 @@ func CheckError(err error) {
 }
 
 func main() {
-	serv_addr,err := net.ResolveUDPAddr("udp",":10001")
+	serv_addr, err := net.ResolveUDPAddr("udp", ":10001")
 	CheckError(err)
 
-	serv_conn,err := net.ListenUDP("udp", serv_addr)
+	serv_conn, err := net.ListenUDP("udp", serv_addr)
 	CheckError(err)
 
 	defer serv_conn.Close()
+	read(serv_conn)
+}
+func read(serv_conn *net.UDPConn) {
 
 	buffer := make([]byte, 1024)
 
-	var last_recd int = -1
+	var last_recd int = 0
 	for {
 		fmt.Println("Reading from UDP buffer...")
 		n,addr,err := serv_conn.ReadFromUDP(buffer)
@@ -38,8 +41,7 @@ func main() {
 		current_packet = test
 
 	//	fmt.Println(binary_packet, current_packet)
-		fmt.Println("Received", current_packet, ", checking packet now.")
-		go check_packet(current_packet, last_recd)
+		go check_packet(serv_conn, current_packet, last_recd)
 
 		fmt.Println("Successfully received", string(buffer[0:n]), "from", addr)
 		last_recd, err = strconv.Atoi(string(buffer[0:n]))
@@ -48,4 +50,5 @@ func main() {
 		}
 	}
 }
+
 
